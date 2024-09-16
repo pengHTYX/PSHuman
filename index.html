@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="PSHuman: Photorealistic Single-view Human Reconstruction using Cross-Scale Diffusion"
+    />
+    <meta
+      name="keywords"
+      content="Human Digitization, MVdiffusion, 3D Reconstruction"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      PSHuman: Photorealistic Single-view Human Reconstruction using Cross-Scale Diffusion
+    </title>
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-E0HR9YQK2K"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-E0HR9YQK2K");
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./static/css/bulma.min.css" />
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css" />
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css" />
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css"
+    />
+    <link rel="stylesheet" href="./static/css/index.css" />
+
+    <style>
+      .center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 10px;
+      }
+      .render_wrapper {
+        position: relative;
+        height: 460px;
+      }
+      .render_wrapper_small {
+        position: relative;
+        height: 460px;
+      }
+      .render_div {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      .nested-columns {
+        margin-bottom: 0 !important;
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script
+      src="https://kit.fontawesome.com/57fb8d417e.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="https://unpkg.com/interactjs/dist/interact.min.js"></script>
+    <script src="./static/js/index.js"></script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+    ></script>
+  </head>
+
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="">
+         
+          </a>
+        </div>
+      </div> 
+    </div>
+
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">PSHuman: Photorealistic Single-view Human Reconstruction using Cross-Scale Diffusion</h1>
+          <div class="is-size-5 publication-authors">
+            <!-- <span class="author-block">
+              Anonymous author(s)</span>
+            </span> -->
+            <span class="author-block">  
+              Peng Li<sup>1</sup>,</span>
+            <span class="author-block">
+              Wangguandong Zheng<sup>2</sup>,</span>
+            <span class="author-block">
+              <a href="https://liuyuan-pal.github.io/">Yuan Liu</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://ytrock.com/">Tao Yu</a><sup>3</sup>,</span>
+            <span class="author-block">
+              Yangguang Li<sup>4</sup>,</span>
+            <span class="author-block">
+              <a href="https://xingqunqi-lab.github.io/QXQPage/">Xingqun Qi</a><sup>1</sup>,</span>
+            <span class="author-block">
+              Mengfei Li<sup>1</sup>,</span>
+            <span class="author-block">
+              Xiaowei Chi<sup>1</sup>,</span>
+            <span class="author-block">
+              Siyu Xia<sup>2</sup>,</span>
+            <span class="author-block">
+              <a href="http://wei-xue.com/index.htm">Wei Xue</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://whluo.github.io/">Wenhan Luo</a><sup>1</sup>,</span>
+            <span class="author-block">
+              Qifeng Liu<sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://cse.hkust.edu.hk/admin/people/faculty/profile/yikeguo">Yike Guo</a><sup>1</sup></span>
+          </div>
+          <br>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>HKUST,</span>
+            <span class="author-block"><sup>2</sup>Southeast University,</span>
+            <span class="author-block"><sup>3</sup>Tsinghua University,</span>
+            <span class="author-block"><sup>4</sup>Vast</span>
+          </div>
+          <br>
+          <!-- TODO: update paper link -->
+          <div class="column has-text-centered">
+            <!-- <div class="publication-links"> -->
+              <!-- PDF Link. -->
+              <span class="link-block">
+              <a href=""
+                 class="external-link button is-normal is-rounded is-dark">
+                <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                </span>
+                <span>arXiv</span>
+              </a>
+            </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href=""
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                </a>
+              </span>
+              <!-- Demo Link. -->
+              <span class="link-block">
+                <a href=""
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span>🤗 Demo(Coming)</span>
+                </a>
+              </span>
+            </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        
+        <div class="item item-steve render_wrapper_small">
+          <img src="./static/images/pexels-zdmit-6780091.png" />
+        </div>
+        <div class="item item-steve render_wrapper">
+          <div id="pose_6780091" class="render_div"></div>
+        </div>
+        <div class="item item-steve render_wrapper">
+          <video id="teaser" autoplay muted loop playsinline height="100%">
+            <source src="static/videos/pexels-zdmit-6780091_color.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-steve render_wrapper_small">
+          <img src="./static/images/26d2e846349647ff04c536816e0e8ca1.png" />
+        </div>
+        <div class="item item-steve render_wrapper">
+          <div id="pose_26d2e846349647ff04c536816e0e8ca1" class="render_div"></div>
+        </div>
+        <div class="item item-steve render_wrapper">
+          <video id="teaser" autoplay muted loop playsinline height="100%">
+            <source src="static/videos/26d2e846349647ff04c536816e0e8ca1_color.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-steve render_wrapper_small">
+          <img src="./static/images/663dcd6db19490de0b790da430bd5681.png" />
+        </div>
+        <div class="item item-steve render_wrapper">
+          <div id="pose_663dcd6db19490de0b790da430bd5681" class="render_div"></div>
+        </div>
+        <div class="item item-steve render_wrapper">
+          <video id="teaser" autoplay muted loop playsinline height="100%">
+            <source src="static/videos/663dcd6db19490de0b790da430bd5681_color.mp4" type="video/mp4">
+          </video>
+        </div>
+        
+        <div class="item item-steve render_wrapper_small">
+          <img src="./static/images/f14f7d40b72062928461b21c6cc877407e69ee0c_high.png" />
+        </div>
+        <div class="item item-steve render_wrapper">
+          <div id="pose_f14f7d40b72062928461b21c6cc877407e69ee0c_high" class="render_div"></div>
+        </div>
+        <div class="item item-steve render_wrapper">
+          <video id="teaser" autoplay muted loop playsinline height="100%">
+            <source src="static/videos/f14f7d40b72062928461b21c6cc877407e69ee0c_high_color.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-steve render_wrapper_small">
+          <img src="./static/images/pexels-barbara-olsen-7869640.png" />
+        </div>
+        <div class="item item-steve render_wrapper">
+          <div id="pose_7869640" class="render_div"></div>
+        </div>
+        <div class="item item-steve render_wrapper">
+          <video id="teaser" autoplay muted loop playsinline height="100%">
+            <source src="static/videos/pexels-barbara-olsen-7869640_color.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-steve render_wrapper_small">
+          <img src="./static/images/pexels-brett-sayles-3889057.png" />
+        </div>
+        <div class="item item-steve render_wrapper">
+          <div id="pose_3889057" class="render_div"></div>
+        </div>
+        <div class="item item-steve render_wrapper">
+          <video id="teaser" autoplay muted loop playsinline height="100%">
+            <source src="static/videos/pexels-brett-sayles-3889057_color.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-steve render_wrapper_small">
+          <img src="./static/images/02986d0998ce01aa0aa67a99fbd1e09a.png" />
+        </div>
+        <div class="item item-steve render_wrapper">
+          <div id="pose_02986d0998ce01aa0aa67a99fbd1e09a" class="render_div"></div>
+        </div>
+        <div class="item item-steve render_wrapper">
+          <video id="teaser" autoplay muted loop playsinline height="100%">
+            <source src="static/videos/02986d0998ce01aa0aa67a99fbd1e09a_color.mp4" type="video/mp4">
+          </video>
+        </div>
+        
+        <div class="item item-steve render_wrapper_small">
+          <img src="./static/images/pexels-julia-m-cameron-4145040.png" />
+        </div>
+        <div class="item item-steve render_wrapper">
+          <div id="pose_4145040" class="render_div"></div>
+        </div>
+        <div class="item item-steve render_wrapper">
+          <video id="teaser" autoplay muted loop playsinline height="100%">
+            <source src="static/videos/pexels-julia-m-cameron-4145040_color.mp4" type="video/mp4">
+          </video>
+        </div>
+        
+        <div class="item item-steve render_wrapper_small">
+          <img src="./static/images/durant.png" />
+        </div>
+        <div class="item item-steve render_wrapper">
+          <div id="pose_durant" class="render_div"></div>
+        </div>
+        <div class="item item-steve render_wrapper">
+          <video id="teaser" autoplay muted loop playsinline height="100%">
+            <source src="static/videos/durant_color.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-steve render_wrapper_small">
+          <img src="./static/images/case5.png" />
+        </div>
+        <div class="item item-steve render_wrapper">
+          <div id="pose_case5" class="render_div"></div>
+        </div>
+        <div class="item item-steve render_wrapper">
+          <video id="teaser" autoplay muted loop playsinline height="100%">
+            <source src="static/videos/case5_color.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-steve render_wrapper_small">
+          <img src="./static/images/kr.png" />
+        </div>
+        <div class="item item-steve render_wrapper">
+          <div id="pose_kr" class="render_div"></div>
+        </div>
+        <div class="item item-steve render_wrapper">
+          <video id="teaser" autoplay muted loop playsinline height="100%">
+            <source src="static/videos/kr_color.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-steve render_wrapper_small">
+          <img src="./static/images/pexels-marta-wave-6437749.png" />
+        </div>
+        <div class="item item-steve render_wrapper">
+          <div id="pose_6437749" class="render_div"></div>
+        </div>
+        <div class="item item-steve render_wrapper">
+          <video id="teaser" autoplay muted loop playsinline height="100%">
+            <source src="static/videos/pexels-marta-wave-6437749_color.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-steve render_wrapper_small">
+          <img src="./static/images/pexels-photo-6311555-removebg.png" />
+        </div>
+        <div class="item item-steve render_wrapper">
+          <div id="pose_6311555" class="render_div"></div>
+        </div>
+        <div class="item item-steve render_wrapper">
+          <video id="teaser" autoplay muted loop playsinline height="100%">
+            <source src="static/videos/pexels-photo-6311555_color.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-steve render_wrapper_small">
+          <img src="./static/images/sport2.png" />
+        </div>
+        <div class="item item-steve render_wrapper">
+          <div id="pose_sport2" class="render_div"></div>
+        </div>
+        <div class="item item-steve render_wrapper">
+          <video id="teaser" autoplay muted loop playsinline height="100%">
+            <source src="static/videos/sport2_color.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-steve render_wrapper_small">
+          <img src="./static/images/2095f20b1390e14d9312913c61c4b621.png" />
+        </div>
+        <div class="item item-steve render_wrapper">
+          <div id="pose_2095f20b1390e14d9312913c61c4b621" class="render_div"></div>
+        </div>
+        <div class="item item-steve render_wrapper">
+          <video id="teaser" autoplay muted loop playsinline height="100%">
+            <source src="static/videos/2095f20b1390e14d9312913c61c4b621_color.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div style="text-align: center">
+        <b>PSHuman</b> facilitates photorealistic and <b>identity-preserved</b> human digitization from a single image.&ensp;
+        <i class="fas fa-cube fa-2x fa-spin"></i>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Detailed and photorealistic 3D human modeling is essential for various 
+            applications and has seen tremendous progress. However, full-body reconstruction from
+            a monocular RGB image remains challenging due to the ill-posed nature of the
+            problem and sophisticated clothing topology with self-occlusions. In this paper, 
+            we propose <b>PSHuman</b>, a novel framework that explicitly reconstructs human 
+            meshes utilizing priors from the multi-view diffusion model. It is found
+            that directly applying multiview diffusion on single-view human images leads to
+            severe geometric distortions, especially on generated faces. To address it, we 
+            propose a cross-scale diffusion that models the joint probability distribution of global
+            full-body shape and local facial characteristics, enabling detailed and identity-
+            preserved novel-view generation without any geometric distortion. Moreover, to
+            enhance cross-view body shape consistency of varied human poses, we condition
+            the generative model on parametric models like SMPL-X, which provide body 
+            priors and prevent unnatural views inconsistent with human anatomy. Leveraging the
+            generated multi-view normal and color images, we present SMPLX-initialized explicit 
+            human carving to recover realistic textured human meshes efficiently. Extensive 
+            experimental results and quantitative evaluations on CAPE and THuman2.1
+            datasets demonstrate PSHuman’s superiority in geometry details, texture fidelity,
+            and generalization capability.
+          </p><br>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ Abstract. -->
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <div class="column">
+          <img src="static/assets/pipeline.jpg" alt="pipeline" style="width:100%">
+        </div>
+        <div class="content has-text-justified">
+          <p><b>Pipeline.</b> Given a single full-body human image, PSHuman recovers the texture
+            human mesh by two stages: <b>1)</b> Body-face enhanced and SMPL-X conditioned multi-view 
+            generation. The input image and predicted SMPL-X are fed into a multi-view image diffusion model
+              to generate six views of global full-body images and local face images.  <b>2)</b>  SMPLX-initialized explicit
+              human carving. Utilizing generated normal and color maps to deform and remesh the SMPL-X with
+              differentiable rasterization.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </section>
+
+  <!-- Comparisons -->
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Comparisons</h2>
+        <div class="column">
+          <img src="static/assets/geo_comp.jpg" alt="pipeline" style="width:100%">
+        </div>
+        <div style="text-align: center">
+          <p>Geometry comparison between <b>Implicit</b> and <b>Explicit</b> methods.</p>
+        </div>
+        <br>
+        <div class="column">
+          <img src="static/assets/texture_comp.jpg" alt="pipeline" style="width:100%">
+        </div>
+        <div style="text-align: center">
+          <p>Appearance comparison with methods which produce texture.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <section class="hero is-light is-small">
+    <div class="hero-body">
+      <div class="columns is-centered has-text-centered"><h2 class="title is-3">More results</h2></div>
+      
+      <div class="container">
+        <div id="results-carousel" class="carousel results-carousel">
+          
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/SHHQ/29817_color.mp4" type="video/mp4">
+            </video>
+          </div>
+
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/SHHQ/29817_normal.mp4" type="video/mp4">
+            </video>
+          </div>
+      
+
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/SHHQ/19854_color.mp4" type="video/mp4">
+            </video>
+          </div>
+
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/SHHQ/19854_normal.mp4" type="video/mp4">
+            </video>
+          </div>
+      
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/SHHQ/16171_color.mp4" type="video/mp4">
+            </video>
+          </div>
+
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/SHHQ/16171_normal.mp4" type="video/mp4">
+            </video>
+          </div>
+      
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/SHHQ/592_color.mp4" type="video/mp4">
+            </video>
+          </div>
+
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/SHHQ/592_normal.mp4" type="video/mp4">
+            </video>
+          </div>
+      
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/SHHQ/3930_color.mp4" type="video/mp4">
+            </video>
+          </div>
+
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/SHHQ/3930_normal.mp4" type="video/mp4">
+            </video>
+          </div>
+      
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/SHHQ/4626_color.mp4" type="video/mp4">
+            </video>
+          </div>
+
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/SHHQ/4626_normal.mp4" type="video/mp4">
+            </video>
+          </div>
+      
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/SHHQ/7332_color.mp4" type="video/mp4">
+            </video>
+          </div>
+
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/SHHQ/7332_normal.mp4" type="video/mp4">
+            </video>
+          </div>
+      
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/SHHQ/25590_color.mp4" type="video/mp4">
+            </video>
+          </div>
+
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/SHHQ/25590_normal.mp4" type="video/mp4">
+            </video>
+          </div>
+      
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/SHHQ/28435_color.mp4" type="video/mp4">
+            </video>
+          </div>
+
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/SHHQ/28435_normal.mp4" type="video/mp4">
+            </video>
+          </div>
+      
+     
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/SHHQ/28727_color.mp4" type="video/mp4">
+            </video>
+          </div>
+
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/SHHQ/28727_normal.mp4" type="video/mp4">
+            </video>
+          </div>
+      
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/SHHQ/35288_color.mp4" type="video/mp4">
+            </video>
+          </div>
+
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/SHHQ/35288_normal.mp4" type="video/mp4">
+            </video>
+          </div>
+      
+        
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/SHHQ/34400_color.mp4" type="video/mp4">
+            </video>
+          </div>
+
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/SHHQ/34400_normal.mp4" type="video/mp4">
+            </video>
+          </div>
+         
+        </div>
+        <div style="text-align: center">
+          <b>SHHQ fashion data Digitization</b>&ensp;
+          <i class="fas fa-cube fa-2x fa-spin"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+<footer class="footer">
+    <div class="container">
+        <div class="content has-text-centered">
+            <a class="icon-link" href="">
+                <i class="fas fa-file-pdf"></i>
+            </a>
+            <a class="icon-link" href="" class="external-link" disabled>
+                <i class="fab fa-github"></i>
+            </a>
+        </div>
+        <div class="columns is-centered">
+            <div class="column is-8">
+                <div class="content">
+                    <p style="text-align:center">
+                        Source code mainly borrowed from <a href="mailto: yuliang.xiu@tue.mpg.de">Yuliang Xiu</a>'s <a
+                            href="https://xiuyuliang.cn/econ/">ECON</a>.
+                    </p>
+                    <p style="text-align:center">
+                        Please contact <a href="mailto: lpstarry@163.com">Peng Li </a>for feedback and questions.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Import maps polyfill -->
+    <!-- Remove this when import maps will be widely supported -->
+    <script
+      async
+      src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"
+    ></script>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "./js/three.module.js"
+        }
+      }
+    </script>
+
+    <script type="module">
+      import * as THREE from "three";
+
+      import { PLYLoader } from "./js/PLYLoader.js";
+      import { OrbitControls } from "./js/OrbitControls.js";
+      let div_to_scene = {
+        pose_2095f20b1390e14d9312913c61c4b621: {
+          geo: null,
+        },
+        pose_26d2e846349647ff04c536816e0e8ca1: {
+          geo: null,
+        }, 
+        pose_663dcd6db19490de0b790da430bd5681: {
+          geo: null,
+        },
+        pose_case5: {
+          geo: null,
+        },
+        pose_durant: {
+          geo: null,
+        },
+        pose_f14f7d40b72062928461b21c6cc877407e69ee0c_high: {
+          geo: null,
+        },
+        pose_kr: {
+          geo: null,
+        },
+        pose_7869640: {
+          geo: null,
+        },
+        pose_3889057: {
+          geo: null,
+        },
+        pose_4145040: {
+          geo: null,
+        },
+        pose_6437749: {
+          geo: null,
+        },
+        pose_6780091: {
+          geo: null,
+        },
+        pose_6311555: {
+          geo: null,
+        },
+        pose_sport2: {
+          geo: null,
+        },
+        pose_02986d0998ce01aa0aa67a99fbd1e09a: {
+          geo: null,
+        },
+      };
+      let mouse_button_down = false;
+      let list_of_orbit_controls = [];
+      let style_camera = null;
+      let render_colors = true;
+      let style_id = "0";
+
+      function setup_camera(div_name) {
+        let container = document.getElementById(div_name);
+        let width = container.parentElement.clientWidth;
+        let height = container.parentElement.clientHeight;
+        console.log(width, height);
+        let camera = new THREE.PerspectiveCamera(35, width / height, 0.1, 50);
+        let camera_init_position = new THREE.Vector3(0, 0, 4.6);
+        camera_init_position = camera_init_position.multiplyScalar(1.5);
+        //if (div_name.includes("style")) {
+        //    camera_init_position = camera_init_position.multiplyScalar(1.25)
+        //}
+        //else if (div_name.includes("style")) {
+        //    camera_init_position = camera_init_position.multiplyScalar(1.25)
+        //}
+        camera.position.set(
+          camera_init_position.x,
+          camera_init_position.y,
+          camera_init_position.z
+        );
+        return camera;
+      }
+
+      function setup_render_divs(div_name, mesh_path) {
+        let camera = setup_camera(div_name);
+        let orbit_control = create_render_div(camera, div_name, mesh_path);
+        list_of_orbit_controls.push(orbit_control);
+      }
+
+      function create_render_div(camera, div_id, mesh_path) {
+        let container;
+        let renderer, controls;
+
+        init();
+        animate();
+
+        function init() {
+          container = document.getElementById(div_id);
+          let width = container.parentElement.clientWidth;
+          let height = container.parentElement.clientHeight;
+
+          div_to_scene[div_id]["geo"] = new THREE.Scene();
+          div_to_scene[div_id]["geo"].background = new THREE.Color(0xffffff);
+          //var axesHelper = new THREE.AxesHelper( 5 );
+          //div_to_scene[div_id]["geo"].add( axesHelper );
+
+          // PLY file
+
+          const loader = new PLYLoader();
+          loader.load(
+            mesh_path,
+            function (geometry) {
+              geometry.computeVertexNormals();
+              const material_geo = new THREE.MeshPhongMaterial({
+                color: 0xcce6ff,
+                specular: 0x222222,
+                shininess: 25,
+              });
+
+              const mesh_geo = new THREE.Mesh(geometry, material_geo);
+              //mesh_geo.castShadow = true;
+              //mesh_geo.receiveShadow = true;
+              div_to_scene[div_id]["geo"].add(mesh_geo);
+            },
+            (xhr) => {
+              console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+
+          // lights
+
+          add_lights(div_to_scene[div_id]["geo"]);
+
+          // renderer
+
+          renderer = new THREE.WebGLRenderer({ antialias: true });
+          renderer.setPixelRatio(window.devicePixelRatio);
+          renderer.setSize(width, height);
+          renderer.outputEncoding = THREE.sRGBEncoding;
+
+          //renderer.shadowMap.enabled = true;
+
+          container.appendChild(renderer.domElement);
+
+          controls = new OrbitControls(camera, renderer.domElement);
+          controls.enableDamping = false;
+          controls.autoRotate = true;
+
+          // resize
+
+          window.addEventListener("resize", onWindowResize);
+          //controls.addEventListener('change', onChange)
+          controls.addEventListener("start", function () {
+            //clearTimeout(autorotateTimeout);
+            controls.autoRotate = false;
+          });
+
+          // restart autorotate after the last interaction & an idle time has passed
+          //this.controls.addEventListener('end', function(){
+          //  autorotateTimeout = setTimeout(function(){
+          //    controls.autoRotate = true;
+          //  }, 1000);
+          //});
+        }
+        function onWindowResize() {
+          let width = container.clientWidth;
+          let height = container.clientHeight;
+          camera.aspect = width / height;
+          camera.updateProjectionMatrix();
+          renderer.setSize(width, height);
+        }
+        function animate() {
+          requestAnimationFrame(animate);
+          controls.update();
+          render();
+        }
+
+        function render() {
+          renderer.render(div_to_scene[div_id]["geo"], camera);
+          controls.update();
+        }
+
+        return controls;
+      }
+
+      function add_lights(scene) {
+        scene.add(new THREE.HemisphereLight(0x443333, 0x111122, 0.05));
+        const spotLight = new THREE.SpotLight(0xffffff, 0.5);
+        spotLight.position.set(0.0, 0.5, 1);
+        const spotLight2 = new THREE.SpotLight(0xffffff, 0.25);
+        spotLight2.position.set(-2, 0.3, -0.2);
+        const spotLight3 = new THREE.SpotLight(0xffffff, 0.25);
+        spotLight3.position.set(2, -0.3, 0.2);
+        const spotLight4 = new THREE.SpotLight(0xffffff, 0.25);
+        spotLight4.position.set(0.0, 1, -2);
+        const spotLight5 = new THREE.SpotLight(0xffffff, 0.05);
+        spotLight5.position.set(0, -2.5, -1);
+        spotLight.position.multiplyScalar(10);
+        scene.add(spotLight);
+        scene.add(spotLight2);
+        scene.add(spotLight3);
+        scene.add(spotLight4);
+        scene.add(spotLight5);
+      }
+
+      document.addEventListener("keydown", logKey);
+
+      function logKey(evt) {
+        if (evt.keyCode === 71 && !mouse_button_down) {
+          switch_geometry();
+        }
+        if (evt.keyCode === 82 && !mouse_button_down) {
+          reset_orbit_controls();
+        }
+      }
+
+      function switch_geometry() {
+        render_colors = !render_colors;
+      }
+
+      function reset_orbit_controls() {
+        list_of_orbit_controls.forEach((oc) => {
+          oc.reset();
+          oc.autoRotate = false;
+        });
+      }
+
+      function set_style_0() {
+        style_id = "0";
+      }
+
+      function set_style_1() {
+        style_id = "1";
+      }
+
+      function set_style_2() {
+        style_id = "2";
+      }
+
+      function set_style_3() {
+        style_id = "3";
+      }
+
+      function set_style_4() {
+        style_id = "4";
+      }
+      function set_style_5() {
+        style_id = "5";
+      }
+      function set_style_6() {
+        style_id = "6";
+      }
+
+      document.body.onmousedown = function (evt) {
+        if (evt.button === 0) mouse_button_down = true;
+      };
+      document.body.onmouseup = function (evt) {
+        if (evt.button === 0) mouse_button_down = false;
+      };
+
+      window.onload = function () {
+        let slider = document.getElementsByClassName("slider")[0];
+        slider.removeAttribute("tabIndex");
+        setup_render_divs(
+          "pose_2095f20b1390e14d9312913c61c4b621",
+          "./static/models/result_clr_scale4_2095f20b1390e14d9312913c61c4b621.ply"
+        );
+        setup_render_divs(
+          "pose_26d2e846349647ff04c536816e0e8ca1",
+          "./static/models/result_clr_scale4_26d2e846349647ff04c536816e0e8ca1.ply"
+        );
+        setup_render_divs(
+          "pose_663dcd6db19490de0b790da430bd5681",
+          "./static/models/result_clr_scale4_663dcd6db19490de0b790da430bd5681.ply"
+        );
+        setup_render_divs(
+          "pose_case5",
+          "./static/models/result_clr_scale4_case5.ply"
+        );
+        setup_render_divs(
+          "pose_durant",
+          "./static/models/result_clr_scale4_durant.ply"
+        );
+        setup_render_divs(
+          "pose_f14f7d40b72062928461b21c6cc877407e69ee0c_high",
+          "./static/models/f14f7d40b72062928461b21c6cc877407e69ee0c_high_final.ply"
+        );
+        setup_render_divs(
+          "pose_kr",
+          "./static/models/result_clr_scale4_kr.ply"
+        );
+        setup_render_divs(
+          "pose_7869640",
+          "./static/models/result_clr_scale4_pexels-barbara-olsen-7869640.ply"
+        );
+        setup_render_divs(
+          "pose_3889057",
+          "./static/models/result_clr_scale4_pexels-brett-sayles-3889057.ply"
+        );
+        setup_render_divs(
+          "pose_4145040",
+          "./static/models/result_clr_scale4_pexels-julia-m-cameron-4145040.ply"
+        );
+        setup_render_divs(
+          "pose_6437749",
+          "./static/models/result_clr_scale4_pexels-marta-wave-6437749.ply"
+        );
+        setup_render_divs(
+          "pose_6780091",
+          "./static/models/result_clr_scale4_pexels-zdmit-6780091.ply"
+        );
+        setup_render_divs(
+          "pose_6311555",
+          "./static/models/result_clr_scale4_pexels-photo-6311555.ply"
+        );
+        setup_render_divs(
+          "pose_sport2",
+          "./static/models/result_clr_scale4_sport2.ply"
+        );
+        setup_render_divs(
+          "pose_02986d0998ce01aa0aa67a99fbd1e09a",
+          "./static/models/result_clr_scale4_02986d0998ce01aa0aa67a99fbd1e09a.ply"
+        );
+      };
+    </script>
+
+
+</body>
+</html>
