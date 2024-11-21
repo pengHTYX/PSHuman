@@ -13,7 +13,8 @@
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>
-      PSHuman: Photorealistic Single-view Human Reconstruction using Cross-Scale Diffusion
+      PSHuman: Photorealistic Single-image 3D Human Reconstruction using
+      Cross-Scale Multiview Diffusion and Explicit Remeshing
     </title>
 
     <!-- Google tag (gtag.js) -->
@@ -130,7 +131,8 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">PSHuman: Photorealistic Single-view Human Reconstruction using Cross-Scale Diffusion</h1>
+          <h1 class="title is-1 publication-title" style="font-size: 30px;">PSHuman: Photorealistic Single-image 3D Human Reconstruction using
+            Cross-Scale Multiview Diffusion and Explicit Remeshing</h1>
           <div class="is-size-5 publication-authors">
             <!-- <span class="author-block">
               Anonymous author(s)</span>
@@ -167,7 +169,7 @@
             <span class="author-block"><sup>1</sup>HKUST,</span>
             <span class="author-block"><sup>2</sup>Southeast University,</span>
             <span class="author-block"><sup>3</sup>Tsinghua University,</span>
-            <span class="author-block"><sup>4</sup>Vast</span>
+            <span class="author-block"><sup>4</sup>VAST</span>
           </div>
           <br>
           <!-- TODO: update paper link -->
@@ -212,7 +214,7 @@
   <div class="hero-body">
     <div class="container">
       <div style="font-family: Arial, sans-serif; font-size: 16px; color: #4A90E2; margin-top: 1px; text-align: left;">
-        Wait moments for loading meshes...</div>
+        Please wait moments for loading meshes...</div>
       <div id="results-carousel" class="carousel results-carousel">
         
         <div class="item item-steve render_wrapper_small">
@@ -416,12 +418,12 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Detailed and photorealistic 3D human modeling is essential for various 
-            applications and has seen tremendous progress. However, full-body reconstruction from
-            a monocular RGB image remains challenging due to the ill-posed nature of the
-            problem and sophisticated clothing topology with self-occlusions. In this paper, 
-            we propose <b>PSHuman</b>, a novel framework that explicitly reconstructs human 
-            meshes utilizing priors from the multi-view diffusion model. It is found
+            Photorealistic 3D human modeling is essential for various applications and has seen 
+            tremendous progress. However, existing methods for monocular full-body reconstruction, 
+            typically relying on front and/or predicted back view, still struggle with satisfactory 
+            performance due to the ill-posed nature of the problem and sophisticated self-occlusions. 
+            In this paper, we propose <b>PSHuman</b>, a novel framework that explicitly 
+            reconstructs human meshes utilizing priors from the multiview diffusion model. It is found
             that directly applying multiview diffusion on single-view human images leads to
             severe geometric distortions, especially on generated faces. To address it, we 
             propose a cross-scale diffusion that models the joint probability distribution of global
@@ -459,38 +461,87 @@
       </div>
     </div>
   </div>
-  </section>
 
-  <!-- Comparisons -->
+  <!-- mesh carving -->
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
+        <div class="column is-one-third">
+            <video  controls style="width: 100%;">
+                <source src="static/videos/geo_f14f7d40b72062928461b21c6cc877407e69ee0c_high.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p><b>Mesh carving</b></p>
+        </div>
+        <div class="column is-one-third">
+            <video  controls style="width: 100%;">
+                <source src="static/videos/colors_f14f7d40b72062928461b21c6cc877407e69ee0c_high.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p><b>Appearance Fusion</b></p>
+        </div>
+    </div>
+    <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">Comparisons</h2>
-        <div class="column">
-          <img src="static/assets/geo_comp.jpg" alt="pipeline" style="width:100%">
-        </div>
-        <div style="text-align: center">
-          <p>Geometry comparison between <b>Implicit</b> and <b>Explicit</b> methods.</p>
-        </div>
-        <br>
-        <div class="column">
-          <img src="static/assets/texture_comp.jpg" alt="pipeline" style="width:100%">
-        </div>
-        <div style="text-align: center">
-          <p>Appearance comparison with methods which produce texture.</p>
-        </div>
-        <br>
-        <div class="column">
-          <img src="static/assets/optim_comp.jpg" alt="pipeline" style="width:100%">
-        </div>
-        <div style="text-align: center">
-          <p>Qualitative comparisons with optimization-based methods for single view reconstruction. </p>
-            <p>(a) Magic123, (b) Dreamgaussian, (c) Chupa, (d) TeCH and (e) Ours.</p>
-        </div>
-
+          <video id="teaser" autoplay muted loop playsinline style="width: 100%;">
+              <source src="static/videos/result_clr_scale4_f14f7d40b72062928461b21c6cc877407e69ee0c_high.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
+          <p><b>Textured mesh</b></p>
       </div>
+  </div>
+    <div style="text-align: center">
+      <p>SMPLX-initialized explicit human mesh carving and appearance fusion.</p>
     </div>
   </div>
+  </section>
+
+     <!-- Comparisons -->
+     <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Comparisons</h2>
+          <div class="column">
+            <img src="static/assets/geo_comp.png" alt="pipeline" style="width:100%">
+          </div>
+          <div style="text-align: center">
+            <p>Geometry comparison between <b>Implicit</b> and <b>Explicit</b> methods.</p>
+          </div>
+          <br>
+          <div class="column">
+            <img src="static/assets/texture_comp.jpg" alt="pipeline" style="width:100%">
+          </div>
+          <div style="text-align: center">
+            <p>Appearance comparison with methods which produce texture.</p>
+          </div>
+          <br>
+          <div class="column">
+            <img src="static/assets/optim_comp.jpg" alt="pipeline" style="width:100%">
+          </div>
+          <div style="text-align: center">
+            <p>Qualitative comparisons with optimization-based methods for single view reconstruction. </p>
+              <p>(a) Magic123, (b) Dreamgaussian, (c) Chupa, (d) TeCH and (e) Ours.</p>
+          </div>
+          <br>
+          <div class="column">
+            <img src="static/assets/occlusion.jpg" alt="pipeline" style="width:100%">
+          </div>
+          <div style="text-align: center">
+            <p>Reconstruction quality on <b>self-occluded</b> images. We present the generated back, left, </p>
+            <p> and right views of normal maps and corresponding meshes.</p>
+          </div>
+          <br>
+          <div class="column">
+            <img src="static/assets/cartoon.jpg" alt="pipeline" style="width:100%">
+          </div>
+          <div style="text-align: center">
+            <p>Generalization on anime characters. We present the generated multiview color and normal images and corresponding meshes
+              (in blue).</p>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  
 
 
   <section class="hero is-light is-small">
@@ -652,7 +703,119 @@
           <b>SHHQ fashion data Digitization</b>&ensp;
           <i class="fas fa-cube fa-2x fa-spin"></i>
         </div>
+
       </div>
+      
+      <div class="container">
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="item item-steve render_wrapper" height="100%">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/anime/clr_2f28f1acdd5ad0ba1d5df1a2d3a01e02d1fbeb0af54e7a80e072892d50599057.mp4" type="video/mp4">
+            </video>
+          </div>
+          
+          <div class="item item-steve render_wrapper" height="100%">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/anime/nrm_2f28f1acdd5ad0ba1d5df1a2d3a01e02d1fbeb0af54e7a80e072892d50599057.mp4" type="video/mp4">
+            </video>
+          </div>
+
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/anime/clr_4656716--3016170581.mp4" type="video/mp4">
+            </video>
+          </div>
+          
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/anime/nrm_4656716--3016170581.mp4" type="video/mp4">
+            </video>
+          </div>
+
+
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/anime/clr_b0d178743c7e3e09700aaee8d2b1ec47.mp4" type="video/mp4">
+            </video>
+          </div>
+          
+          
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/anime/nrm_b0d178743c7e3e09700aaee8d2b1ec47.mp4" type="video/mp4">
+            </video>
+          </div>
+
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/anime/clr_eedb9018-e0eb-45be-33bd-5a0108ca0d8b.mp4" type="video/mp4">
+            </video>
+          </div>
+          
+          
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/anime/nrm_eedb9018-e0eb-45be-33bd-5a0108ca0d8b.mp4" type="video/mp4">
+            </video>
+          </div>
+
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/anime/clr_fw1200.mp4" type="video/mp4">
+            </video>
+          </div>
+          
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/anime/nrm_fw1200.mp4" type="video/mp4">
+            </video>
+          </div>
+
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/anime/clr_w700d1q75cms.mp4" type="video/mp4">
+            </video>
+          </div>
+          
+
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/anime/nrm_w700d1q75cms.mp4" type="video/mp4">
+            </video>
+          </div>
+
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/anime/clr_RESULT1.mp4" type="video/mp4">
+            </video>
+          </div>
+
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/anime/nrm_RESULT1.mp4" type="video/mp4">
+            </video>
+          </div>
+
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/anime/clr_20241116225924.mp4" type="video/mp4">
+            </video>
+          </div>
+          
+          
+          <div class="item item-steve render_wrapper">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="static/anime/nrm_20241116225924.mp4" type="video/mp4">
+            </video>
+          </div>
+
+        </div>
+        <div style="text-align: center">
+          <b> Anime Characters Digitization</b>&ensp;
+          <i class="fas fa-cube fa-2x fa-spin"></i>
+        </div>
+      </div>
+
     </div>
   </section>
 
