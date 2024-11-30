@@ -4,24 +4,15 @@ This is the official implementation of *PSHuman: Photorealistic Single-image 3D 
 
 ### [Project Page](https://penghtyx.github.io/PSHuman/) | [Arxiv](https://arxiv.org/pdf/2409.10141) | [Weights](https://huggingface.co/pengHTYX/PSHuman_Unclip_768_6views) 
 
-<tr>
-    <td>
-        <video src="assets/result_clr_scale4_pexels-barbara-olsen-7869640.mp4" controls="controls" width="500" height="300" autoplay muted loop>
-            您的浏览器不支持播放该视频
-        </video>
-    </td>
-    <td>
-        <video src="assets/result_clr_scale4_pexels-zdmit-6780091.mp4" controls="controls" width="500" height="300" autoplay muted loop>
-            您的浏览器不支持播放该视频
-        </video>
-    </td>
-</tr>
+https://github.com/user-attachments/assets/b62e3305-38a7-4b51-aed8-1fde967cca70
+
+https://github.com/user-attachments/assets/76100d2e-4a1a-41ad-815c-816340ac6500
 
 
 Given a single image of a clothed person, **PSHuman** facilitates detailed geometry and realistic 3D human appearance across various poses within one minute.
 
 ### 📝 Update
-- __[2024.11.30]__: Release the SMPL-free [model](https://huggingface.co/pengHTYX/PSHuman_Unclip_768_6views), which does not requires SMPL condition for multview generation and perfome well in general posed human.
+- __[2024.11.30]__: Release the SMPL-free [version](https://huggingface.co/pengHTYX/PSHuman_Unclip_768_6views), which does not requires SMPL condition for multview generation and perfome well in general posed human.
 
 
 ### Installation
