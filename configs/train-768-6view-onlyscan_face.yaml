@@ -1,0 +1,145 @@
+pretrained_model_name_or_path: stabilityai/stable-diffusion-2-1-unclip
+pretrained_unet_path: null
+revision: null
+with_smpl: false
+data_common:
+  root_dir: /aifs4su/mmcode/lipeng/human_8view_new/
+  predict_relative_views: [0, 1, 2, 4, 6, 7]
+  num_validation_samples: 8
+  img_wh: [768, 768]
+  read_normal: true
+  read_color: true
+  read_depth: false
+  exten: .png
+  prompt_embeds_path: mvdiffusion/data/fixed_prompt_embeds_7view
+  object_list:
+  - data_lists/human_only_scan.json
+  invalid_list:
+  - 
+train_dataset:
+  root_dir: ${data_common.root_dir}
+  azi_interval: 45.0
+  random_views: 3
+  predict_relative_views: ${data_common.predict_relative_views}
+  bg_color: three_choices
+  object_list: ${data_common.object_list}
+  invalid_list: ${data_common.invalid_list}
+  img_wh: ${data_common.img_wh}
+  validation: false
+  num_validation_samples: ${data_common.num_validation_samples}
+  read_normal: ${data_common.read_normal}
+  read_color: ${data_common.read_color}
+  read_depth: ${data_common.read_depth}
+  load_cache: false
+  exten: ${data_common.exten}
+  prompt_embeds_path: ${data_common.prompt_embeds_path}
+  side_views_rate: 0.3
+  elevation_list: null
+validation_dataset:
+  prompt_embeds_path: ${data_common.prompt_embeds_path}
+  root_dir: examples/debug
+  num_views: ${num_views}
+  bg_color: white
+  img_wh: ${data_common.img_wh}
+  num_validation_samples: 1000
+  crop_size: 740
+validation_train_dataset:
+  root_dir: ${data_common.root_dir}
+  azi_interval: 45.0
+  random_views: 3
+  predict_relative_views: ${data_common.predict_relative_views}
+  bg_color: white
+  object_list: ${data_common.object_list}
+  invalid_list: ${data_common.invalid_list}
+  img_wh: ${data_common.img_wh}
+  validation: false
+  num_validation_samples: ${data_common.num_validation_samples}
+  read_normal: ${data_common.read_normal}
+  read_color: ${data_common.read_color}
+  read_depth: ${data_common.read_depth}
+  num_samples: ${data_common.num_validation_samples}
+  load_cache: false
+  exten: ${data_common.exten}
+  prompt_embeds_path: ${data_common.prompt_embeds_path}
+  elevation_list: null
+output_dir:  output/unit-unclip-768-6view-onlyscan-onlyortho-faceinself-scale0.5
+checkpoint_prefix: ../human_checkpoint_backup/
+seed: 42
+train_batch_size: 2
+validation_batch_size: 1
+validation_train_batch_size: 1
+max_train_steps: 30000
+gradient_accumulation_steps: 2
+gradient_checkpointing: true
+learning_rate: 0.0001
+scale_lr: false
+lr_scheduler: piecewise_constant
+step_rules:  1:2000,0.5
+lr_warmup_steps: 10
+snr_gamma: 5.0
+use_8bit_adam: false
+allow_tf32: true
+use_ema: true
+dataloader_num_workers: 32
+adam_beta1: 0.9
+adam_beta2: 0.999
+adam_weight_decay: 0.01
+adam_epsilon: 1.0e-08
+max_grad_norm: 1.0
+prediction_type: null
+logging_dir: logs
+vis_dir: vis
+mixed_precision: fp16
+report_to: wandb
+local_rank: 0
+checkpointing_steps: 2500
+checkpoints_total_limit: 2
+resume_from_checkpoint: latest
+enable_xformers_memory_efficient_attention: true
+validation_steps: 2500 # 
+validation_sanity_check: true
+tracker_project_name: PSHuman
+trainable_modules: null
+
+
+use_classifier_free_guidance: true
+condition_drop_rate: 0.05
+scale_input_latents: true
+regress_elevation: false
+regress_focal_length: false
+elevation_loss_weight: 1.0
+focal_loss_weight: 0.0
+pipe_kwargs:
+  num_views: ${num_views}
+pipe_validation_kwargs:
+  eta: 1.0
+
+unet_from_pretrained_kwargs:
+  unclip: true
+  num_views: ${num_views}
+  sample_size: 96
+  zero_init_conv_in: true
+  regress_elevation: ${regress_elevation}
+  regress_focal_length: ${regress_focal_length}
+  num_regress_blocks: 2
+  camera_embedding_type: e_de_da_sincos
+  projection_camera_embeddings_input_dim: 2
+  zero_init_camera_projection: true # modified
+  init_mvattn_with_selfattn: false
+  cd_attention_last: false
+  cd_attention_mid: false
+  multiview_attention: true
+  sparse_mv_attention: true
+  selfattn_block: self_rowwise
+  mvcd_attention: true
+  addition_downsample: false
+  use_face_adapter: false
+
+validation_guidance_scales:
+- 3.0
+validation_grid_nrow: ${num_views}
+camera_embedding_lr_mult: 1.0
+plot_pose_acc: false
+num_views: 7
+pred_type: joint
+drop_type: drop_as_a_whole

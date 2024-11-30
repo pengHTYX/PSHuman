@@ -1,0 +1,11 @@
+**/__pycache__
+wandb
+wandb-debug.log
+
+blender/env_textures
+smpl_related
+data_lists
+legacy/
+debug/
+
+out/

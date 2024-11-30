@@ -1,0 +1,18 @@
+res_path: out
+save_glb: False
+imgs_path: examples/debug
+mv_path: ./
+# camera setting
+num_view: 6
+scale: 4
+mode: ortho
+resolution: 1024
+cam_path: 'mvdiffusion/data/six_human_pose'
+# optimization
+iters: 700
+clr_iters: 200
+debug: false
+snapshot_step: 50
+lr_clr: 2e-3
+gpu_id: 0
+replace_hand: false
