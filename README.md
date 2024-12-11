@@ -2,7 +2,7 @@
 
 This is the official implementation of *PSHuman: Photorealistic Single-image 3D Human Reconstruction using Cross-Scale Multiview Diffusion*.
 
-### [Project Page](https://penghtyx.github.io/PSHuman/) | [Arxiv](https://arxiv.org/pdf/2409.10141) | [Weights](https://huggingface.co/pengHTYX/PSHuman_Unclip_768_6views) 
+### [![Project Page](https://raw.githubusercontent.com/prs-eth/Marigold/main/doc/badges/badge-website.svg)](https://penghtyx.github.io/PSHuman/) | [![Paper](https://img.shields.io/badge/arXiv-PDF-b31b1b)](https://arxiv.org/pdf/2409.10141) | [![Demo](https://img.shields.io/badge/🤗%20Hugging%20Face%20-Space-yellow)](https://huggingface.co/spaces/fffiloni/PSHuman) | [![Hugging Face Model](https://img.shields.io/badge/🤗%20Hugging%20Face%20-Model-green)](https://huggingface.co/pengHTYX/PSHuman_Unclip_768_6views) 
 
 https://github.com/user-attachments/assets/b62e3305-38a7-4b51-aed8-1fde967cca70
 
@@ -13,7 +13,11 @@ Given a single image of a clothed person, **PSHuman** facilitates detailed geome
 
 ### 📝 Update
 - __[2024.11.30]__: Release the SMPL-free [version](https://huggingface.co/pengHTYX/PSHuman_Unclip_768_6views), which does not require SMPL condition for multiview generation and perform well in general posed human.
+- __[2024.12.11]__: The huggingface demo has been deployed [here](https://huggingface.co/spaces/fffiloni/PSHuman). Special thanks to [Sylvain Filoni](https://github.com/fffiloni)! Take a try now.
 
+### Common issues
+- **Q:** Minimum VRAM requirement  
+**A**: The current model is trained at a resolution of 768, requiring over 40GB of VRAM. We are considering training a new model at a resolution of 512, which would allow it to run on an RTX 4090.
 
 ### Installation
 ```
